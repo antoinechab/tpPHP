@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} - admin{% endblock %}
+{% block stylesheets %}{{ parent() }}
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        main {
+            flex: 1 0 auto;
+        }
+        body {
+            background: #fff;
+        }
+        .input-field input[type=date]:focus + label,
+        .input-field input[type=text]:focus + label,
+        .input-field input[type=email]:focus + label,
+        .input-field input[type=password]:focus + label {
+            color: #e91e63;
+        }
+        .input-field input[type=date]:focus,
+        .input-field input[type=text]:focus,
+        .input-field input[type=email]:focus,
+        .input-field input[type=password]:focus {
+            border-bottom: 2px solid #e91e63;
+            box-shadow: none;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div style="text-align: center;">
+        <div class="section"></div>
+        <h5 style="color: #2c7dbe">Please, login into your account</h5>
+        <div class="section"></div>
+        <div class="container">
+            <div class="z-depth-1 grey lighten-4 row"
+                 style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+                <form action="{{ path('security_login') }}" method="post">
+                    <div class='row'>
+                        <div class='col s12'>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='input-field col s12'>
+{#                            <i class="material-icons prefix">personal</i>#}
+                            <input class='validate' type='text' name='username' id='username'/>
+                            <label for='username'>Enter your username</label>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='input-field col s12'>
+{#                            <i class="material-icons prefix">lock</i>#}
+                            <input class='validate' type='password' name='password' id='password'/>
+                            <label for='password'>Enter your password</label>
+                        </div>
+                    </div>
+                    <br/>
+                    <div style="text-align: center;">
+                        <div class='row'>
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+                            <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect' style="background-color: #2c7dbe">
+                                Login
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="container">
+                    {% if error %}
+                        <div class="alert alert-danger red-text">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}{{ parent() }}{% endblock %}

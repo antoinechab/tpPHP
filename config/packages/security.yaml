@@ -1,0 +1,41 @@
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: auto
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        database_users:
+            entity: { class: App\Entity\User, property: username }
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            pattern: ^/
+            anonymous: true
+#            remember_me:
+#                secret:     "%env(APP_SECRET)%"
+#                lifetime:   604800
+#                path:                     /
+#                domain:                   ~
+#                name:                     remember_me
+#                secure:                   true
+#                httponly:                false
+#                always_remember_me:       true
+#                remember_me_parameter:    _remember_me
+            logout:
+                path: security_logout
+            guard:
+                authenticators:
+                    - App\Security\FormLoginAuthenticator
+
+    access_control:
+#        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/ajout, roles: ROLE_ADMIN }
+
+#fossuser

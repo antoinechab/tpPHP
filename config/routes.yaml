@@ -1,0 +1,25 @@
+index:
+    path: /
+    controller: App\Controller\DefaultController::accueil
+
+index_name:
+    path: /hello/{name}
+    controller: App\Controller\DefaultController::index_name
+
+ajout_annonce:
+    path: /ajout
+    controller: App\Controller\DefaultController::ajoutAnnonce
+
+formulaire_ajout:
+    path: /ajaxCreation
+    controller: App\Controller\DefaultController::formulaireAjout
+
+security_login:
+    path: /login
+    controller: App\Controller\DefaultController::login
+
+app_login_check:
+    path: /login_check
+
+security_logout:
+    path: /logout

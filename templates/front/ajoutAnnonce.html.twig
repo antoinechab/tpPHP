@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }}{% endblock %}
+{% block stylesheets %}{{ parent() }}
+{% endblock %}
+{% block body %}
+    <div class="section no-pad-bot" id="index-banner">
+        <div class="container">
+            <br><br>
+            <h1 class="header center" style="color: #2c7dbe">Création d'annonces</h1>
+            <div class="row center">
+                <h5 class="header col s12 light">Vous pouvez créer une annonce en remplissant le formulaire suivant</h5>
+            </div>
+            <br><br>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="input-field col s12 m12 l6">
+            {#            <i class="material-icons prefix">account_circle</i>#}
+            <input name="titre" id="titre" type="text" class="validate">
+            <label for="titre">Titre</label>
+            <span class="helper-text" data-error="erreur" data-success="correct"></span>
+        </div>
+        <div class="input-field col s12 m12 l6">
+            {#                <i class="material-icons prefix">email</i>#}
+            <input name="price" id="price" type="text" class="validate">
+            <label for="price">Prix</label>
+            <span class="helper-text" data-error="erreur" data-success="correct"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12 m12 l12">
+            {#            <i class="material-icons prefix">account_circle</i>#}
+            <textarea id="content" class="materialize-textarea validate" data-length="500" maxlength="500"></textarea>
+            <label for="content">Content</label>
+            <span class="helper-text" data-error="erreur" data-success="correct"></span>
+        </div>
+    </div>
+    <div class="center-align">
+        <a class="btn" onclick="valider()">Valider</a>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var textNeedCount = document.querySelectorAll('#content');
+            M.CharacterCounter.init(textNeedCount);
+        });
+
+        function valider() {
+
+            let $val_ret = true;
+
+            if ($("#titre").val() === '') {
+                $("#titre").addClass('invalid');
+                $val_ret = false;
+            } else {
+                $("#titre").removeClass('invalid');
+            }
+
+            if ($("#price").val() === '') {
+                $("#price").addClass('invalid');
+                $val_ret = false;
+            } else {
+                $("#price").removeClass('invalid');
+            }
+
+            if ($("#content").val() === '') {
+                $("#content").addClass('invalid');
+                $val_ret = false;
+            } else {
+                $("#content").removeClass('invalid');
+            }
+
+
+            if ($val_ret) {
+
+                $.ajax({
+                    url: "{{ path('formulaire_ajout') }}",
+                    type: 'POST',
+                    data: {
+                        token: "{{ csrf_token('formulaire_ajout') }}",
+                        title: $('#titre').val(),
+                        price: $('#price').val(),
+                        content: $('#content').val(),
+                    },
+                    success: function (data) {
+                        swal(data)
+                        // TODO: vérification de l'allerte surment un mauvais import
+                    }
+                });
+            }
+        }
+
+        function swalBtn(data) {
+            if (data === 'success') {
+                swal("Succès !", "Création effectué !", "success")
+            } else {
+                swal("Erreur !", "Création echouée !", "error")
+            }
+
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }}{% endblock %}
+{% block stylesheets %}{{ parent() }}
+    <style>
+        /*.card {*/
+        /*    height: 442px;*/
+        /*}*/
+        /*.card-content #prix {*/
+        /*    margin-top: 200px;*/
+        /*}*/
+
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="section no-pad-bot" id="index-banner">
+        <div class="container">
+            <br><br>
+            <h1 class="header center" style="color: #2c7dbe">Les annonces</h1>
+            <div class="row center">
+                <h5 class="header col s12 light">voici toutes les annonces</h5>
+            </div>
+            <br><br>
+        </div>
+    </div>
+
+    <div class="input-field col s12">
+        <select>
+            <option value="" disabled selected>choisis ta catégorie</option>
+            {% for cat in categories %}
+                <option value="{{ cat.id }}">{{ cat.nom }}</option>
+            {% endfor %}
+        </select>
+        <label>Catégorie</label>
+    </div>
+    <div class="row">
+//TODO: créer le fomulaire avec symfony et faire le filtre par annonces
+        {% for annonce in annonces %}
+                <div class="col s12 l4 ">
+                    <div class="row">
+                        <div class="col s12 m10 center-align offset-m2">
+                            <div id="annonce-{{ annonce.id }}" class="card hoverable lescards">
+                                <h2 class="center" style="color: #2c7dbe">
+                                </h2>
+                                <h5 class="center" style="padding-top: 15px">{{ annonce.title }}</h5>
+                                <div id="annonceContent-{{ annonce.id }}" class="card-content">
+                                    <p>{{ annonce.content }}</p>
+                                    <h3 id="prix">{{ annonce.price }} €</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        let max = 0;
+        // let maxPad = 0;
+        {% for annonce in annonces %}
+        let heightCards{{ annonce.id }} = document.getElementById('annonce-{{ annonce.id }}').offsetHeight;
+        {#let padCard{{ annonce.id }} = (document.getElementById('annonce-{{ annonce.id }}').offsetHeight - (document.getElementById('annonceContent-{{ annonce.id }}').offsetHeight));#}
+
+        if (heightCards{{ annonce.id }} > max) {
+            max = heightCards{{ annonce.id }};
+        }
+        {#if (padCard{{ annonce.id }} > maxPad){#}
+        {#    maxPad = padCard{{ annonce.id }};#}
+        {#}#}
+        {% endfor %}
+        $('.lescards').css({
+            height: max + 'px',
+        });
+        // $('.card-content #prix').css({
+        //     marginBottom: 15+'px'
+        // });
+
+    </script>
+{% endblock %}
