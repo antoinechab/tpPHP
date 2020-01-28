@@ -35,7 +35,6 @@ security:
                     - App\Security\FormLoginAuthenticator
 
     access_control:
-#        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/ajout, roles: ROLE_ADMIN }
+        - { path: ^/ajout, roles: ROLE_ADMIN }
 
 #fossuser
