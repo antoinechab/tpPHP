@@ -1,22 +1,26 @@
 index:
     path: /
-    controller: App\Controller\DefaultController::accueil
+    controller: App\Controller\AccueilController::accueil
 
 index_name:
     path: /hello/{name}
     controller: App\Controller\DefaultController::index_name
 
+#ajout_annonce:
+#    path: /ajout
+#    controller: App\Controller\AjoutController::ajoutAnnonce
+
 ajout_annonce:
     path: /ajout
-    controller: App\Controller\DefaultController::ajoutAnnonce
+    controller: App\Controller\FormulaireController::new
 
 formulaire_ajout:
     path: /ajaxCreation
-    controller: App\Controller\DefaultController::formulaireAjout
+    controller: App\Controller\AjoutController::formulaireAjout
 
 security_login:
     path: /login
-    controller: App\Controller\DefaultController::login
+    controller: App\Controller\LoginController::login
 
 app_login_check:
     path: /login_check

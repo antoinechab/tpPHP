@@ -3,6 +3,9 @@
 {% block stylesheets %}{{ parent() }}
 {% endblock %}
 {% block body %}
+
+    {{ form_start(form) }}
+
     <div class="section no-pad-bot" id="index-banner">
         <div class="container">
             <br><br>
@@ -16,29 +19,43 @@
 
     <div class="row">
         <div class="input-field col s12 m12 l6">
-            {#            <i class="material-icons prefix">account_circle</i>#}
-            <input name="titre" id="titre" type="text" class="validate">
+{#                        <i class="material-icons prefix">account_circle</i>#}
+{#            <input name="titre" id="titre" type="text" class="validate">#}
+            {{ form_widget(form.title) }}
+
             <label for="titre">Titre</label>
             <span class="helper-text" data-error="erreur" data-success="correct"></span>
         </div>
         <div class="input-field col s12 m12 l6">
-            {#                <i class="material-icons prefix">email</i>#}
-            <input name="price" id="price" type="text" class="validate">
+{#                            <i class="material-icons prefix">email</i>#}
+{#            <input name="price" id="price" type="text" class="validate">#}
+            {{ form_widget(form.price) }}
             <label for="price">Prix</label>
             <span class="helper-text" data-error="erreur" data-success="correct"></span>
         </div>
     </div>
     <div class="row">
         <div class="input-field col s12 m12 l12">
-            {#            <i class="material-icons prefix">account_circle</i>#}
-            <textarea id="content" class="materialize-textarea validate" data-length="500" maxlength="500"></textarea>
+{#                        <i class="material-icons prefix">account_circle</i>#}
+{#            <textarea id="content" class="materialize-textarea validate" data-length="500" maxlength="500"></textarea>#}
+            {{ form_widget(form.content) }}
             <label for="content">Content</label>
             <span class="helper-text" data-error="erreur" data-success="correct"></span>
         </div>
     </div>
     <div class="center-align">
-        <a class="btn" onclick="valider()">Valider</a>
+{#        <a class="btn" onclick="valider()">Valider</a>#}
+        {{ form_widget(form.save) }}
     </div>
+
+
+{#    {% embed "front/formAjout.html.twig" %}#}
+{#    {% endembed %}#}
+
+    {{ form_end(form) }}
+
+
+{#TODO: styliser le form#}
 
 {% endblock %}
 {% block javascripts %}
