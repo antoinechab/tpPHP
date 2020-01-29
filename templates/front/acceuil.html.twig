@@ -1,15 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{ parent() }}{% endblock %}
 {% block stylesheets %}{{ parent() }}
-    <style>
-        /*.card {*/
-        /*    height: 442px;*/
-        /*}*/
-        /*.card-content #prix {*/
-        /*    margin-top: 200px;*/
-        /*}*/
-
-    </style>
 {% endblock %}
 {% block body %}
     <div class="section no-pad-bot" id="index-banner">
@@ -23,18 +14,26 @@
         </div>
     </div>
 
+
     <div class="input-field col s12">
-        <select>
-            <option value="" disabled selected>choisis ta catégorie</option>
-            {% for cat in categories %}
-                <option value="{{ cat.id }}">{{ cat.nom }}</option>
+        <select id="selectCat">
+            <option value="vide" disabled selected>choisis ta catégorie</option>
+            {% for cat in annonces %}
+                {% if cat.categorie %}
+{#                  {% dump cat.categorie.nom %}#}
+                    <option value="{{ cat.id }}">{{ cat.categorie.nom }}</option>
+                {% endif %}
             {% endfor %}
         </select>
         <label>Catégorie</label>
     </div>
     <div class="row">
 {#TODO: créer le fomulaire avec symfony et faire le filtre par annonces#}
-        {% for annonce in annonces %}
+        {% if annoncesFiltred is defined %}
+            {#TODO: gérer l'actualisation des données dans la page#}
+            {{ include('front/listAnnonces.twig') }}
+        {% else %}
+            {% for annonce in annonces %}
                 <div class="col s12 l4 ">
                     <div class="row">
                         <div class="col s12 m10 center-align offset-m2">
@@ -50,31 +49,45 @@
                         </div>
                     </div>
                 </div>
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script>
-        let max = 0;
-        // let maxPad = 0;
-        {% for annonce in annonces %}
-        let heightCards{{ annonce.id }} = document.getElementById('annonce-{{ annonce.id }}').offsetHeight;
-        {#let padCard{{ annonce.id }} = (document.getElementById('annonce-{{ annonce.id }}').offsetHeight - (document.getElementById('annonceContent-{{ annonce.id }}').offsetHeight));#}
 
-        if (heightCards{{ annonce.id }} > max) {
-            max = heightCards{{ annonce.id }};
-        }
-        {#if (padCard{{ annonce.id }} > maxPad){#}
-        {#    maxPad = padCard{{ annonce.id }};#}
-        {#}#}
+        $('#selectCat').on('change', function () {
+            // console.log( $("#selectCat option:selected").val());
+            $.ajax({
+                url: "{{ path('filtrage') }}",
+                type: 'POST',
+                data: {
+                    token: "{{ csrf_token('filtrage') }}",
+                    id: $("#selectCat option:selected").val(),
+                },
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        });
+
+        // function  filtrage(data){
+        //     console.log(data)
+        // }
+
+        let max = 0;
+        {% for annonce in annonces %}
+            let heightCards{{ annonce.id }} = document.getElementById('annonce-{{ annonce.id }}').offsetHeight;
+
+            if (heightCards{{ annonce.id }} > max) {
+                max = heightCards{{ annonce.id }};
+            }
         {% endfor %}
         $('.lescards').css({
             height: max + 'px',
         });
-        // $('.card-content #prix').css({
-        //     marginBottom: 15+'px'
-        // });
+
 
     </script>
 {% endblock %}

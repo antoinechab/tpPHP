@@ -27,3 +27,7 @@ app_login_check:
 
 security_logout:
     path: /logout
+
+filtrage:
+    path: /filtrage
+    controller: App\Controller\AccueilController::filtrage

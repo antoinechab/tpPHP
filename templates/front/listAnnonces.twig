@@ -1,0 +1,25 @@
+{#{% extends 'base.html.twig' %}#}
+{#{% block title %}{{ parent() }}{% endblock %}#}
+{#{% block stylesheets %}{{ parent() }}{% endblock %}#}
+{#{% block body %}#}
+    {% for annoncesFiltred in annoncesFiltred %}
+        {#            {% if annoncesFiltred.categorie %}#}
+        <div class="col s12 l4 ">
+            <div class="row">
+                <div class="col s12 m10 center-align offset-m2">
+                    <div id="annoncesFiltred-{{ annoncesFiltred.id }}" class="card hoverable lescards">
+                        <h2 class="center" style="color: #2c7dbe">
+                        </h2>
+                        <h5 class="center" style="padding-top: 15px">{{ annoncesFiltred.title }}</h5>
+                        <div id="annoncesFiltredContent-{{ annoncesFiltred.id }}" class="card-content">
+                            <p>{{ annoncesFiltred.content }}</p>
+                            <h3 id="prix">{{ annoncesFiltred.price }} €</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{#                    {% endif %}#}
+    {% endfor %}
+{#{% endblock %}#}
+{#{% block javascripts %}{{ parent() }}{% endblock %}#}
