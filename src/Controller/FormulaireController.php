@@ -13,7 +13,7 @@ class FormulaireController extends AbstractController
     {
         $annonce = new Annonce();
 
-        $form = $this->createForm(AnnonceType::class, $annonce);//annonceType
+        $form = $this->createForm(AnnonceType::class, $annonce);
 
         return $this->render('front/ajoutAnnonce.html.twig', [
             'form' => $form->createView(),

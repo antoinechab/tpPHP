@@ -47,4 +47,11 @@ class AnnonceRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findAllByCat($cat)
+    {
+        $query = $this->_em->createQuery('SELECT l FROM App\Entity\Annonce l WHERE l.categorie = :cat')->setParameter('cat',$cat);
+        $licence = $query->execute();
+        return $licence;
+    }
 }

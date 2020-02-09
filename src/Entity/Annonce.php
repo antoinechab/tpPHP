@@ -5,9 +5,11 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
+use JMS\Serializer\Annotation as Serialiser;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AnnonceRepository")
+ * @Serialiser\ExclusionPolicy("ALL")
  */
 class Annonce
 {
@@ -15,26 +17,31 @@ class Annonce
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Serialiser\Expose()
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serialiser\Expose()
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Serialiser\Expose()
      */
     private $content;
 
     /**
      * @ORM\Column(type="float")
+     * @Serialiser\Expose()
      */
     private $price;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Categorie",inversedBy="annonce")
+     * @Serialiser\Expose()
      */
     private $categorie;
 
@@ -50,7 +57,8 @@ class Annonce
      * @param array $param
      * @throws Exception
      */
-    public function setDefault(array $param){
+    public function setDefault(array $param)
+    {
 
         $param['createdAt'] = new DateTime();
         $this->hydrate($param);
@@ -114,9 +122,10 @@ class Annonce
         return $this;
     }
 
-    public function hydrate(array $element){
+    public function hydrate(array $element)
+    {
         // Browse this array
-        foreach ($element as $key => $value){
+        foreach ($element as $key => $value) {
             // We recover the setter name
             $method = 'set' . ucfirst($key);
             // If setter exist

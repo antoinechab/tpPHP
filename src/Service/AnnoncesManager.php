@@ -93,13 +93,12 @@ class AnnoncesManager
         return $this->repository->findOneBy(['id' => $id]);
     }
 
-    /**
-     * @param int $id
-     * @return Annonce|null
-     */
-    public function getByCat(int $id): ?Annonce
+
+
+    public function getByCat(int $id)
     {
-        return $this->repository->findOneBy(['categorie' => $id]);
+        return $this->repository->findAllByCat($id);
+//        return $this->repository->findAll(['categorie' => $id]);
     }
 
 
